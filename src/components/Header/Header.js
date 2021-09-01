@@ -2,8 +2,8 @@ import './Header.css';
 
 export default function Header() {
     return (
-        <div>
+        <header>
             <h1>CINEFLEX</h1>
-        </div>
+        </header>
     )
 }
