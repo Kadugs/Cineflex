@@ -7,13 +7,11 @@ export default function Home({movies}) {
                 <span>Selecione o filme</span>
             </div>
             <div className="movies">
-                {movies.map((item) => (
+                {movies.map((item, index) => (
                     <Movie 
                         id={item.id}
-                        title={item.title}
                         image={item.posterURL}
-                        overview={item.overview}
-                        releaseDate={item.releaseDate}
+                        key={index}
                     />
                 ))}
             </div>

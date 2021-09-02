@@ -1,15 +1,10 @@
 import './Movie.css';
+import {Link} from 'react-router-dom';
 
-export default function Movie({
-    id,
-    title,
-    image,
-    overview,
-    releaseDate,
-}) {
+export default function Movie( {id, image, setIdMovie} ) {
     return(
-        <div className="movie">
-            <img src={image} alt="" />
-        </div>
+        <Link to={'/movie/' + id} className="movie">
+            <img src={image} alt=""/>
+        </Link>
     )
 }

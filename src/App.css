@@ -1,8 +1,10 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   color: #293845;
-}
-main {
   margin-top: 85px;
 }
 .title {

@@ -1,10 +1,12 @@
 import './reset.css';
 import './App.css';
-import {BrowserRouter as Router,
+import {BrowserRouter,
   Switch,
   Route } from 'react-router-dom';
 import Header from './components/Header/Header'
 import Home from './components/Home'
+import Session from './components/Session/Session'
+
 export default function App() {
   
   const movies = [
@@ -51,15 +53,19 @@ export default function App() {
       releaseDate: "2020-09-29T00:00:00.000Z",
     }
   ]
-
   return (
-    <Router>
+    <BrowserRouter>
       <Header />
-      <Switch>
-        <Home 
-          movies={movies}
-        />
+      <Switch> 
+        <Route path="/" exact>
+          <Home
+            movies={movies}
+          />
+        </Route>
+        <Route path="/movie/:idMovie" exact>
+          <Session />
+        </Route>
       </Switch>
-    </Router>
+    </BrowserRouter>
   )
 }
