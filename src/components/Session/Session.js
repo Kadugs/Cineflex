@@ -7,6 +7,7 @@ import axios from 'axios';
 import URL from '../URL'
 import Loading from '../Loading.js';
 import Footer from '../Footer/Footer';
+import SeatDescription from '../SeatDescription.js'
 
 export default function Session() {
     const [movieData, setMovieData] = useState([]);
@@ -23,7 +24,6 @@ export default function Session() {
     if(movieData.length === 0) {
         return <Loading />;
     }
-    console.log(movieData);
     return (
         <>
             <div className="title">
@@ -35,24 +35,19 @@ export default function Session() {
                 )))}
             </div>
             <div className="seats-description">
-                <div>
-                    <span className="seat seat-selected"></span>
-                    <span>Selecionado</span>
-                </div>
-                <div>
-                    <span className="seat seat-available"></span>
-                    <span>Disponível</span>
-                </div>
-                <div>
-                    <span className="seat seat-unavailable"></span>
-                    <span>Indisponível</span>
-                </div>
+                <SeatDescription classSeat='seat-selected' type='Descrição' />
+                <SeatDescription classSeat='seat-available' type='Disponível' />
+                <SeatDescription classSeat='seat-unavailable' type='Indisponível' />
             </div>
             <div>
-                <span>Nome do comprador</span>
-                <input type="text" placeholder="Digite seu nome..."></input>
-                <span>CPF do comprador</span>
-                <input type="text" placeholder="Digite seu CPF..."></input>
+                <div className="input-client-infos">
+                    <span>Nome do comprador:</span>
+                    <input type="text" placeholder="Digite seu nome..."></input>
+                </div>
+                <div className="input-client-infos">
+                    <span>CPF do comprador:</span>
+                    <input type="text" placeholder="Digite seu CPF..."></input>
+                </div>
             </div>
             <Link to="/success">
                 <span>Reservar assento(s)</span>

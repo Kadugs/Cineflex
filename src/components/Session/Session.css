@@ -1,3 +1,6 @@
+body {
+    margin-bottom: 130px;
+}
 .seats {
     margin: 0 24px 0 24px;
 }
@@ -36,4 +39,20 @@
 }
 .seats-description div span:nth-child(1) {
     margin-bottom: 8px;
+}
+.input-client-infos {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 5%;
+    font-size: 18px;
+}
+.input-client-infos input {
+    width: 95%;
+    height: 51px;
+    margin-top: 5px;
+    border: 1px solid #D4D4D4;
+    border-radius: 3px;
+    font-size: 18px;
+    font-style: italic;
+    padding-left: 18px;
 }
