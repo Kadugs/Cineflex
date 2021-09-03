@@ -15,6 +15,8 @@ import Success from './components/Success/Success';
 
 export default function App() {
     const [movies, setMovies] = useState([]);
+    const [conclusionInformations, setConclusionInformations] = useState([]);
+    console.log(conclusionInformations)
 
     useEffect(() => {
         const request = axios.get(`${URL}/movies`);
@@ -42,10 +44,14 @@ export default function App() {
                     />
                 </Route>
                 <Route path="/session/:sessionId/time/:timeId" exact>
-                    <Session />
+                    <Session 
+                        setConclusionInformations={setConclusionInformations}
+                    />
                 </Route>
                 <Route path="/success" exact>
-                    <Success />
+                    <Success 
+                        informations={conclusionInformations}
+                   />
                 </Route>
             </Switch>
         </BrowserRouter>

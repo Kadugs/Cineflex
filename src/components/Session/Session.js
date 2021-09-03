@@ -10,7 +10,7 @@ import Footer from '../Footer/Footer';
 import SeatDescription from '../SeatDescription.js'
 import ClientInfos from '../ClientInfos';
 
-export default function Session() {
+export default function Session({setConclusionInformations}) {
     const [movieData, setMovieData] = useState([]);
     const [userSeats, setUserSeats] = useState([]);
     const [userName, setUserName] = useState("");
@@ -24,8 +24,8 @@ export default function Session() {
             alert('error: ' + err.message);
         })
     }, [sessionId]);
-
-    function addSeat(seat) {
+    
+    function addSeat(seat, isAvailable) {
         let isNew = true;
         userSeats.forEach((item) => {
             if(item === seat) {
@@ -33,15 +33,14 @@ export default function Session() {
             }
         })
         const auxSeats = [...userSeats];
-
+        
         setUserSeats(auxSeats.filter((item) => {
             if(item !== seat) {
                 return true;
             }
             return false;
         }))
-        console.log(userSeats)
-        if(isNew) {
+        if(isNew && isAvailable) {
             setUserSeats([...userSeats, seat]);
         }
     } 
@@ -59,6 +58,7 @@ export default function Session() {
         }
         return 'unavailable';
     }
+    
     if(movieData.length === 0) {
         return <Loading />;
     }
@@ -70,8 +70,8 @@ export default function Session() {
             <div className="seats">
                 {movieData.seats.map((seat => (
                     <span key={seat.id}
-                        className={`seat seat-${verifySeat(seat.id, seat.isAvailable)}`}
-                        onClick={() => addSeat(seat.id)}
+                        className={`seat seat-${verifySeat(seat.name, seat.isAvailable)}`}
+                        onClick={() => addSeat(seat.name, seat.isAvailable)}
                     >
                         {seat.name}
                     </span>
@@ -86,7 +86,14 @@ export default function Session() {
                 <ClientInfos type='Nome' setUserInfo={setUserName} />
                 <ClientInfos type='CPF' setUserInfo={setUserCpf} />
             </div>
-            <div className="reserve-button button">
+            <div className="reserve-button button" onClick={() => setConclusionInformations(
+                [
+                    movieData,
+                    {
+                        seats: userSeats,
+                        userName: userName, 
+                        userCpf: userCpf,
+                    }])}>
                 <Link to="/success">Reservar assento(s)</Link>
             </div>
             <Footer 

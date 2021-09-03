@@ -1,0 +1,25 @@
+.conclusion-title {
+    font-weight: bold;
+    color: #247A6B;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.container-conclusion {
+    margin-left: 28px;
+}
+.container-conclusion div {
+    margin-bottom: 30px;
+}
+.container-conclusion div p {
+    margin-bottom: 4px;
+    font-size: 22px;
+}
+.container-conclusion div p:nth-child(1) {
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+.conclusion-button {
+    width: 225px;
+    margin: 0 auto;
+}
