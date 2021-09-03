@@ -8,9 +8,13 @@ import URL from '../URL'
 import Loading from '../Loading.js';
 import Footer from '../Footer/Footer';
 import SeatDescription from '../SeatDescription.js'
+import ClientInfos from '../ClientInfos';
 
 export default function Session() {
     const [movieData, setMovieData] = useState([]);
+    const [userSeats, setUserSeats] = useState([]);
+    const [userName, setUserName] = useState("");
+    const [userCpf, setUserCpf] = useState("");
     const sessionId = useParams().timeId;
     useEffect(() => {
         const request = axios.get(`${URL}/showtimes/${sessionId}/seats`);
@@ -19,8 +23,42 @@ export default function Session() {
         }).catch (err => {
             alert('error: ' + err.message);
         })
-    }, []);
+    }, [sessionId]);
 
+    function addSeat(seat) {
+        let isNew = true;
+        userSeats.forEach((item) => {
+            if(item === seat) {
+                isNew = false;
+            }
+        })
+        const auxSeats = [...userSeats];
+
+        setUserSeats(auxSeats.filter((item) => {
+            if(item !== seat) {
+                return true;
+            }
+            return false;
+        }))
+        console.log(userSeats)
+        if(isNew) {
+            setUserSeats([...userSeats, seat]);
+        }
+    } 
+    function verifySeat(seat, isAvailable) {
+        let isSelected = false;
+        userSeats.forEach((item) => {
+            if(item === seat) {
+                isSelected = true;
+            }
+        })
+        if(isAvailable && !isSelected) {
+            return 'available';
+        } else if(isSelected) {
+            return 'selected';
+        }
+        return 'unavailable';
+    }
     if(movieData.length === 0) {
         return <Loading />;
     }
@@ -31,27 +69,26 @@ export default function Session() {
             </div>
             <div className="seats">
                 {movieData.seats.map((seat => (
-                    <span key={seat.id} className={seat.isAvailable ? 'seat seat-available' : 'seat seat-unavailable'}>{seat.name}</span>
+                    <span key={seat.id}
+                        className={`seat seat-${verifySeat(seat.id, seat.isAvailable)}`}
+                        onClick={() => addSeat(seat.id)}
+                    >
+                        {seat.name}
+                    </span>
                 )))}
             </div>
             <div className="seats-description">
-                <SeatDescription classSeat='seat-selected' type='Descrição' />
+                <SeatDescription classSeat='seat-selected' type='Selecionado' />
                 <SeatDescription classSeat='seat-available' type='Disponível' />
                 <SeatDescription classSeat='seat-unavailable' type='Indisponível' />
             </div>
             <div>
-                <div className="input-client-infos">
-                    <span>Nome do comprador:</span>
-                    <input type="text" placeholder="Digite seu nome..."></input>
-                </div>
-                <div className="input-client-infos">
-                    <span>CPF do comprador:</span>
-                    <input type="text" placeholder="Digite seu CPF..."></input>
-                </div>
+                <ClientInfos type='Nome' setUserInfo={setUserName} />
+                <ClientInfos type='CPF' setUserInfo={setUserCpf} />
             </div>
-            <Link to="/success">
-                <span>Reservar assento(s)</span>
-            </Link>
+            <div className="reserve-button button">
+                <Link to="/success">Reservar assento(s)</Link>
+            </div>
             <Footer 
                 title={movieData.movie.title}
                 image={movieData.movie.posterURL}

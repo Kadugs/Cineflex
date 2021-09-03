@@ -14,7 +14,7 @@ export default function Days(
             <p>{weekday} - {date}</p>
             <section>
             {showtimes.map((time, index) => (
-                <div className='hour-button' key={index}>
+                <div className='hour-button button' key={index}>
                     <Link to={`/session/${id}/time/${time.id}`} >
                         {time.name}
                     </Link>

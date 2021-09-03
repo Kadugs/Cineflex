@@ -9,6 +9,7 @@ import './MoviePage.css';
 import "../../App.css";
 
 export default function MoviePage({ movies }) {
+    const [sessions, setSessions] = useState([]);
     const moviePage = Number(useParams().idMovie);
     const selectedMovie = movies.filter((movie) => {
         if(Number(movie.id) === moviePage) {
@@ -16,7 +17,6 @@ export default function MoviePage({ movies }) {
         }
         return false;
     })
-    const [sessions, setSessions] = useState([]);
     useEffect(() => {
         const request = axios.get(`${URL}/movies/${selectedMovie[0].id}/showtimes`);
         request.then(res => {
@@ -24,7 +24,8 @@ export default function MoviePage({ movies }) {
         }).catch (err => {
             alert('error: ' + err.message);
         })
-    }, []);
+    }, [selectedMovie]);
+    
     if (sessions.length === 0) {
         return <Loading />
     }
@@ -33,7 +34,6 @@ export default function MoviePage({ movies }) {
             <div className="title">
                 <span>Selecione o horário</span>
             </div>
-
             <div className="option-of-days">
                 {sessions.days.map((day, index) =>(
                     <Days 

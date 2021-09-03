@@ -6,19 +6,8 @@ a {
     font-size: 20px;
 }
 .hour-button {
-    display: flex;
-
-    background-color: #E8833A;
-    margin-right: 20px;
-    font-size: 18px;
+    margin-right: 20px;   
     width: 82px;
-    height: 43px;
-    border-radius: 3px;
-    align-items: center;
-    justify-content: center;
-}
-.hour-button a {
-    color: #fff;
 }
 section {
     display: flex;

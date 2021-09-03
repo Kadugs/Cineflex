@@ -11,6 +11,7 @@ import MoviePage from './components/MoviePage/MoviePage';
 import Session from './components/Session/Session';
 import URL from './components/URL'
 import Loading from './components/Loading'
+import Success from './components/Success/Success';
 
 export default function App() {
     const [movies, setMovies] = useState([]);
@@ -40,8 +41,11 @@ export default function App() {
                         movies={movies}
                     />
                 </Route>
-                <Route path="/session/:sessionId/time/:timeId">
+                <Route path="/session/:sessionId/time/:timeId" exact>
                     <Session />
+                </Route>
+                <Route path="/success" exact>
+                    <Success />
                 </Route>
             </Switch>
         </BrowserRouter>
