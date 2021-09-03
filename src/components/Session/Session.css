@@ -1,3 +1,39 @@
-.option-of-days {
-    margin-left: 23px;
+.seats {
+    margin: 0 24px 0 24px;
+}
+.seat {
+    font-size: 11px;
+    display: inline-block;
+    margin: 0 7px 18px 0;
+    width: 26px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 6px;
+}
+.seat-available {
+    background-color: #C3CFD9;
+    border: solid 1px #808F9D;
+}
+.seat-unavailable {
+    background-color: #FBE192;
+    border: solid 1px #F7C52B;
+}
+.seat-selected {
+    background-color: #8DD7CF;
+    border: solid 1px #1AAE9E;
+}
+.seats-description {
+    display: flex;
+    justify-content: space-around;
+}
+.seats-description div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 13px;
+    line-height: 15.23px;
+}
+.seats-description div span:nth-child(1) {
+    margin-bottom: 8px;
 }

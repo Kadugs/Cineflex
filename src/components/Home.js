@@ -1,4 +1,4 @@
-import Movie from './Movie/Movie'
+import ImgMovie from './ImgMovie/ImgMovie'
 
 export default function Home({movies}) {
     return (
@@ -8,7 +8,7 @@ export default function Home({movies}) {
             </div>
             <div className="movies">
                 {movies.map((item, index) => (
-                    <Movie 
+                    <ImgMovie 
                         id={item.id}
                         image={item.posterURL}
                         key={index}

@@ -1,4 +1,4 @@
-import './Movie.css';
+import './ImgMovie.css';
 import {Link} from 'react-router-dom';
 
 export default function Movie( {id, image, setIdMovie} ) {
