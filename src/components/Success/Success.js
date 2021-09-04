@@ -17,7 +17,6 @@ export default function Success({informations}) {
                 </div>
                 <div>
                     <p><strong>Ingressos</strong></p>
-                    {console.log(informations[1])}
                     {informations[1].seats.map((seat, index) => (
                         <p key={index}>Assento {seat}</p>
                     ))}
@@ -25,7 +24,11 @@ export default function Success({informations}) {
                 <div>
                     <p><strong>Comprador</strong></p>
                     <p>Nome: {informations[1].userName}</p>
-                    <p>Cpf: {informations[1].userCpf}</p>
+                    <p>Cpf: {informations[1].userCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, 
+                        (regex, arg1, arg2, arg3, arg4) => {
+                            return arg1 + '.' + arg2 + '.' + arg3 + '-' + arg4;}
+                            )}
+                    </p>
                 </div>
             </div>
             <div className="conclusion-button button">

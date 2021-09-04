@@ -60,3 +60,6 @@ body {
     width: 225px;
     margin: 48px auto;
 }
+.reserve-button p {
+    color: white;
+}

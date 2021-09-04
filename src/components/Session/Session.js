@@ -1,20 +1,21 @@
 import './Session.css';
 import '../../App.css';
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import AddSeat from '../AddSeat.js'
 import axios from 'axios';
 import URL from '../URL'
 import Loading from '../Loading.js';
 import Footer from '../Footer/Footer';
 import SeatDescription from '../SeatDescription.js'
 import ClientInfos from '../ClientInfos';
+import VerifySeat from '../VerifySeat'
 
 export default function Session({setConclusionInformations}) {
     const [movieData, setMovieData] = useState([]);
     const [userSeats, setUserSeats] = useState([]);
-    const [userName, setUserName] = useState("");
-    const [userCpf, setUserCpf] = useState("");
+    const [idSeats, setIdSeats] = useState([]);
+    
     const sessionId = useParams().timeId;
     useEffect(() => {
         const request = axios.get(`${URL}/showtimes/${sessionId}/seats`);
@@ -23,40 +24,25 @@ export default function Session({setConclusionInformations}) {
         }).catch (err => {
             alert('error: ' + err.message);
         })
-    }, [sessionId]);
-    
-    function addSeat(seat, isAvailable) {
-        let isNew = true;
-        userSeats.forEach((item) => {
-            if(item === seat) {
-                isNew = false;
-            }
-        })
-        const auxSeats = [...userSeats];
-        
-        setUserSeats(auxSeats.filter((item) => {
-            if(item !== seat) {
-                return true;
-            }
-            return false;
-        }))
-        if(isNew && isAvailable) {
-            setUserSeats([...userSeats, seat]);
+    }, []);
+
+    const [userName, setUserName] = useState("");
+    const [userCpf, setUserCpf] = useState("");
+    const history = useHistory();
+    function sendInformations() {
+        if( userSeats.length > 0 && userName.length > 0 && userCpf.length === 11) {
+            setConclusionInformations([ movieData, { seats: userSeats, userName: userName, userCpf: userCpf }]);   
+        } else {
+            alert('Verifique os dados!');
+            return;
         }
-    } 
-    function verifySeat(seat, isAvailable) {
-        let isSelected = false;
-        userSeats.forEach((item) => {
-            if(item === seat) {
-                isSelected = true;
-            }
+        const infosToSend = { ids: idSeats, name: userName, cpf: userCpf };
+        const request = axios.post(`${URL}/seats/book-many`, infosToSend);
+        request.then(() => {
+            history.push('/success');
+        }).catch((error) => {
+            alert('Error: ' + error);
         })
-        if(isAvailable && !isSelected) {
-            return 'available';
-        } else if(isSelected) {
-            return 'selected';
-        }
-        return 'unavailable';
     }
     
     if(movieData.length === 0) {
@@ -70,8 +56,8 @@ export default function Session({setConclusionInformations}) {
             <div className="seats">
                 {movieData.seats.map((seat => (
                     <span key={seat.id}
-                        className={`seat seat-${verifySeat(seat.name, seat.isAvailable)}`}
-                        onClick={() => addSeat(seat.name, seat.isAvailable)}
+                        className={`seat seat-${VerifySeat(seat.name, seat.isAvailable, userSeats)}`}
+                        onClick={() => AddSeat(seat, userSeats, idSeats, setUserSeats, setIdSeats)}
                     >
                         {seat.name}
                     </span>
@@ -86,15 +72,8 @@ export default function Session({setConclusionInformations}) {
                 <ClientInfos type='Nome' setUserInfo={setUserName} />
                 <ClientInfos type='CPF' setUserInfo={setUserCpf} />
             </div>
-            <div className="reserve-button button" onClick={() => setConclusionInformations(
-                [
-                    movieData,
-                    {
-                        seats: userSeats,
-                        userName: userName, 
-                        userCpf: userCpf,
-                    }])}>
-                <Link to="/success">Reservar assento(s)</Link>
+            <div className="reserve-button button" onClick={sendInformations}>
+                <p>Reservar assento(s)</p>
             </div>
             <Footer 
                 title={movieData.movie.title}
