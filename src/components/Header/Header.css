@@ -14,3 +14,10 @@ h1 {
     font-size: 34px;
     color: #E8833A;
 }
+
+.image-back {
+    width: 20px;
+    position: fixed;
+    top: 22px;
+    left: 10px;
+}
